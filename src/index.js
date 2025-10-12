@@ -147,6 +147,7 @@ async function displayPlayerInfo(){
     }
 }
 function main(ctime){
+    musicSound.play();
     window.requestAnimationFrame(main);
     if((ctime-lastPaintTime)/1000 < 1/speed){
         return;
