@@ -15,6 +15,7 @@ let snakeArr = [
 ]
 let food = {x:6, y:7};
 //Game Functions
+let existingPlayer = false;
 async function getPlayerName() {
   let playerName = localStorage.getItem("playerName");
 
@@ -37,6 +38,7 @@ async function getPlayerName() {
     console.log("✅ Created new player document:", playerName);
     } else {
     console.log("📄 Existing player document found:", docSnap.data());
+    existingPlayer = true;
     }
 
   return playerName;
@@ -124,12 +126,15 @@ function savePlayerScore(score){
     localStorage.setItem("playerData", JSON.stringify(playerData));
 }
 
-function displayPlayerInfo(){
+async function displayPlayerInfo(){
     const playerData = JSON.parse(localStorage.getItem("playerData"));
     const playerDisplay = document.getElementById("player-info");
+    const playerRef = doc(db, "Players", playerName);
+    const playerInfo = await getDoc(playerRef);
 
-    if(playerData){
-        playerDisplay.innerText = `🎮 Welcome back, ${playerData.name}! 
+    if(playerData && existingPlayer){
+        const data = playerInfo.data();
+        playerDisplay.innerText = `🎮 Welcome back, ${data.playerName}! 
             Your last score: ${playerData.lastScore}`;
     }else{
         playerDisplay.innerHTML = "🎮 Welcome, new player!";
