@@ -1,11 +1,15 @@
 //Game constants and variables
 import { db, doc, setDoc, getDoc, updateDoc, deleteDoc } from "./config.js";
 let inputDir = {x: 0, y: 0};
+import musicFile from "./assets/music.mp3";
+import foodFile from './assets/food.mp3';
+import gameOverFile from './assets/gameover.mp3';
+import moveFile from './assets/move.mp3';
 const board = document.getElementById("board");
-const foodSound = new Audio('food.mp3');
-const gameOverSound = new Audio('gameover.mp3');
-const moveSound = new Audio('move.mp3');
-const musicSound = new Audio('music.mp3');
+const musicSound = new Audio(musicFile);
+const foodSound = new Audio(foodFile);
+const gameOverSound = new Audio(gameOverFile);
+const moveSound = new Audio(moveFile);
 let score = 0;
 const Score = document.getElementById('score');
 let speed = 5;
@@ -14,6 +18,7 @@ let snakeArr = [
     {x: 13, y: 15}
 ]
 let food = {x:6, y:7};
+
 //Game Functions
 let existingPlayer = false;
 async function getPlayerName() {
@@ -178,7 +183,7 @@ async function gameEngine(){
         await updateHighScore(playerName, score);
         await saveTopScore(score);
         await displayTopScore();
-        displayPlayerInfo();
+        await displayPlayerInfo();
         inputDir = {x:0, y:0};
         alert("Game Over. Press any key to play again!");
         snakeArr = [{x:13, y:15}];
@@ -269,6 +274,16 @@ window.addEventListener('keydown', e => {
             break;
         default:
             break;
+    }
+});
+window.addEventListener('keydown', async (e) => {
+    if (!musicStarted) {
+        try {
+            await musicSound.play();
+            musicStarted = true;
+        } catch(err) {
+            console.error("Music play failed:", err);
+        }
     }
 });
 const playerName = localStorage.getItem("playerName");
