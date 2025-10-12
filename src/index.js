@@ -10,6 +10,7 @@ const musicSound = new Audio(musicFile);
 const foodSound = new Audio(foodFile);
 const gameOverSound = new Audio(gameOverFile);
 const moveSound = new Audio(moveFile);
+musicSound.loop = true;
 let score = 0;
 const Score = document.getElementById('score');
 let speed = 5;
