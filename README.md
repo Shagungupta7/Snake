@@ -2,6 +2,8 @@
 
 A classic Snake game built with **HTML, CSS, JavaScript**, and **Firebase Firestore** for storing player data and global high scores.  
 
+![Snake Mania Screenshot](screenshot.png) <!-- Add your screenshot -->
+
 ## Features
 
 - Player high score tracking
